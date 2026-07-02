@@ -11,7 +11,7 @@ const Header = () => {
               <img src="../public/proshop.png" className="w-12 h-12" alt="" />
               <p className="font-bold">ProShop</p>
             </div>
-            <div className="flex gap-4">
+            <div className="hidden md:flex gap-4">
               <Button className="flex">
                 <BaggageClaim />
                 Cart

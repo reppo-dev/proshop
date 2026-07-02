@@ -5,8 +5,8 @@ export const products: Product[] = [
     ID: 1,
     name: "Noise Cancelling Wireless Headphones X500",
     image: [
-      "https://www.google.com/imgres?q=Noise%20Cancelling%20Wireless%20Headphones%20X500&imgurl=https%3A%2F%2Fplatinumkaraoke.com%2Fcdn%2Fshop%2Ffiles%2FWAVE_THUMBNAIL_02.webp%3Fv%3D1772872526%26width%3D1080&imgrefurl=https%3A%2F%2Fplatinumkaraoke.com%2Fproducts%2Fwave-x500-anc&docid=Sr4rcQbnJcFD6M&tbnid=uCjZHtZU2-ptiM&vet=12ahUKEwjzhKupqbOVAxXcRkEAHSroCfsQnPAOegQIOhAA..i&w=1080&h=1080&hcb=2&ved=2ahUKEwjzhKupqbOVAxXcRkEAHSroCfsQnPAOegQIOhAA",
-      "https://www.google.com/imgres?q=Noise%20Cancelling%20Wireless%20Headphones%20X500&imgurl=https%3A%2F%2Fstatic.alaneesqatar.qa%2F2016%2F07%2F1_QWUVKqwFF.png&imgrefurl=https%3A%2F%2Falaneesqatar.qa%2Fproduct%2Fplatinum-wave-x500-anc-wireless-over-ear-headphones-in-qatar%2F&docid=orM9fMWgnFPHPM&tbnid=qZqq_D7zqAaUkM&vet=12ahUKEwjzhKupqbOVAxXcRkEAHSroCfsQnPAOegUIigEQAA..i&w=570&h=706&hcb=2&ved=2ahUKEwjzhKupqbOVAxXcRkEAHSroCfsQnPAOegUIigEQAA",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaf73Yz-u7YVzqOYEM8sY5wgwJZhCiH6C4K9ggMR1nv1NOFAWKmSCbPYo&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScH9kwZH3I_Pt9y-cKgMBlYN5DgSqIkEr3EFgiVrafPyb87UVWIsgYC27b&s=10",
       "https://www.google.com/imgres?q=Noise%20Cancelling%20Wireless%20Headphones%20X500&imgurl=https%3A%2F%2Fstatic.alaneesqatar.qa%2F2016%2F11%2F105108910_l2Vc0h-dhE.png&imgrefurl=https%3A%2F%2Falaneesqatar.qa%2Fproduct%2Fplatinum-wave-x500-anc-wireless-over-ear-headphones-in-qatar%2F&docid=orM9fMWgnFPHPM&tbnid=taqS-WG-Hw5Y4M&vet=12ahUKEwjzhKupqbOVAxXcRkEAHSroCfsQnPAOegQIPBAA..i&w=570&h=706&hcb=2&ved=2ahUKEwjzhKupqbOVAxXcRkEAHSroCfsQnPAOegQIPBAA",
     ],
     description:
@@ -15,7 +15,7 @@ export const products: Product[] = [
     category: "Electronics",
     price: 129.99,
     countInStock: 18,
-    rating: 4.7,
+    rating: 2.78,
     numReviews: 324,
   },
   {
@@ -32,7 +32,7 @@ export const products: Product[] = [
     category: "Electronics",
     price: 399.99,
     countInStock: 7,
-    rating: 4.8,
+    rating: 3,
     numReviews: 158,
   },
   {
