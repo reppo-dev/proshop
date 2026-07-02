@@ -20,5 +20,4 @@ func AllProduct(c fiber.Ctx) error {
 	}
 
 	return c.JSON(products)
-
 }
