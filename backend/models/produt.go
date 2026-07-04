@@ -13,4 +13,5 @@ type Product struct {
 	CountInStock float32 `json:"count_inStock"`
 	Rating float32 `json:"rating"`
 	NumReviews float32 `json:"num_reviews"`
+	Categories  []Category `json:"categories,omitempty" gorm:"many2many:product_categories;"`
 }
