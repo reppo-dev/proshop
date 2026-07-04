@@ -1,18 +1,33 @@
 import type { Product } from "@/interface/products";
-import { products } from "../product";
+
 import ProductCard from "@/components/ProductCard";
+import { useGetProductsQuery } from "@/redux/slices/productApiSlice";
 
 const HomeScreens = () => {
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetProductsQuery("");
+
   return (
     <div>
-      <h1 className="my-4">Latest Products</h1>
-      <div className=" grid grid-cols-1 md:grid-cols-3 gap-4">
-        {products.map((product: Product) => (
-          <div key={product.ID}>
-            <ProductCard product={product} />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : isError ? (
+        <div>{JSON.stringify(error)}</div>
+      ) : (
+        <>
+          <h1 className="my-4">Latest Products</h1>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {products.map((product: Product) => (
+              <ProductCard key={product.ID} product={product} />
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 };

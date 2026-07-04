@@ -8,7 +8,9 @@ import (
 func Router(app *fiber.App) {
 	app.Post("/register",controller.Register)
 	app.Post("/login",controller.Login)
+
 	app.Get("/products",controller.AllProduct)
+	app.Get("/product/:id",controller.ProductIngo)
 
 	app.Get("/getcart",controller.GetCart)
 	app.Post("/addtocart",controller.AddToCart)

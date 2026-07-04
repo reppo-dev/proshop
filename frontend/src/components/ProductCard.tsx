@@ -17,7 +17,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           <Link to={`/product/${product.ID}`}>
             <div className="container flex items-center justify-center">
               <img
-                src={product.image[0]}
+                src={product.image}
                 alt={product.name}
                 className="w-64 h-64"
               />
