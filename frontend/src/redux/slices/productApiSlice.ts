@@ -1,3 +1,4 @@
+import type { Product } from "@/interface/products";
 import { apiSlice } from "./apiSlice";
 
 export const productApiSlice = apiSlice.injectEndpoints({
@@ -8,7 +9,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
-    getProductInfo: builder.query({
+    getProductInfo: builder.query<Product, number>({
       query: (id) => ({
         url: `/product/${id}`,
       }),

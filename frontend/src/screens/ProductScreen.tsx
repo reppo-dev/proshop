@@ -1,11 +1,28 @@
+import Loading from "@/components/Loading";
 import Rating from "@/components/Rating";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { addToCart } from "@/redux/slices/cartSlice";
 import { useGetProductInfoQuery } from "@/redux/slices/productApiSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const ProductScreen = () => {
   const { id } = useParams();
+
+  const [qty, setQty] = useState<number>(1);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   if (!id) {
@@ -28,10 +45,28 @@ const ProductScreen = () => {
     return <div>We Can't Find Product</div>;
   }
 
+  const addToCartHandler = () => {
+    dispatch(
+      addToCart({
+        ID: product.ID,
+        product_id: product.ID,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        count_inStock: product.count_inStock,
+        quantity: qty,
+      }),
+    );
+
+    toast.success("Added to cart");
+  };
+
   return (
     <>
       {isLoading ? (
-        <div>Loading...</div>
+        <div>
+          <Loading />
+        </div>
       ) : isError ? (
         <div>{JSON.stringify(error)}</div>
       ) : (
@@ -57,11 +92,45 @@ const ProductScreen = () => {
               <div className="border py-4 w-full flex items-center justify-between">
                 <p className="pl-6 font-medium">Status:</p>
                 <strong className="pr-6">
-                  {product.countInStock > 0 ? `In Stock` : "Out Of Stock"}
+                  {product.count_inStock > 0 ? `In Stock` : "Out Of Stock"}
                 </strong>
               </div>
-              <div>
-                <Button>Add To Cart</Button>
+              <div className="flex pb-4 px-4 items-center justify-between border-b w-full">
+                <p className="pl-2 font-medium">Qty:</p>
+                <div>
+                  {product.count_inStock > 0 && (
+                    <Select
+                      value={qty.toString()}
+                      onValueChange={(value) => setQty(Number(value))}
+                    >
+                      <SelectTrigger className="w-full max-w-48">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Quantity</SelectLabel>
+                          {[...Array(product.count_inStock).keys()].map((x) => (
+                            <SelectItem
+                              defaultValue="1"
+                              key={x + 1}
+                              value={(x + 1).toString()}
+                            >
+                              {x + 1}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                </div>
+              </div>
+              <div className="">
+                <Button
+                  disabled={product.count_inStock === 0}
+                  onClick={addToCartHandler}
+                >
+                  Add To Cart
+                </Button>
               </div>
             </Card>
           </div>

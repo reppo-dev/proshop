@@ -2,6 +2,7 @@ import type { Product } from "@/interface/products";
 
 import ProductCard from "@/components/ProductCard";
 import { useGetProductsQuery } from "@/redux/slices/productApiSlice";
+import Loading from "@/components/Loading";
 
 const HomeScreens = () => {
   const {
@@ -14,7 +15,9 @@ const HomeScreens = () => {
   return (
     <div>
       {isLoading ? (
-        <div>Loading...</div>
+        <div>
+          <Loading />
+        </div>
       ) : isError ? (
         <div>{JSON.stringify(error)}</div>
       ) : (

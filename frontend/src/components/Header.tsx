@@ -1,7 +1,12 @@
-import { BaggageClaim, CircleUser, PersonStanding, User } from "lucide-react";
+import { BaggageClaim, CircleUser, User } from "lucide-react";
 import { Button } from "./ui/button";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
+import { Badge } from "./ui/badge";
+import { Link } from "react-router-dom";
 
 const Header = () => {
+  const { items } = useSelector((state: RootState) => state.cart);
   return (
     <>
       <header>
@@ -12,10 +17,17 @@ const Header = () => {
               <p className="font-bold">ProShop</p>
             </div>
             <div className="hidden md:flex gap-4">
-              <Button className="flex">
-                <BaggageClaim />
-                Cart
-              </Button>
+              <Link to="/cart">
+                <Button className="flex">
+                  <BaggageClaim />
+                  Cart
+                  {items.length > 0 && (
+                    <Badge variant="default" className="">
+                      {items.reduce((a, c) => a + c.quantity, 0)}
+                    </Badge>
+                  )}
+                </Button>
+              </Link>
               <Button className="flex">
                 <CircleUser />
                 sign in

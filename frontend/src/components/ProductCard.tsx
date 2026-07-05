@@ -19,7 +19,7 @@ const ProductCard = ({ product }: { product: Product }) => {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-64 h-64"
+                className="w-64 h-64 object-contain"
               />
             </div>
             <CardTitle>{product.name}</CardTitle>
