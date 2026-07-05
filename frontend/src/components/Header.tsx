@@ -32,7 +32,11 @@ const Header = () => {
                 <CircleUser />
                 sign in
               </Button>
-              <Button className="flex" variant={"outline"}>
+              <Button
+                className="flex"
+                onClick={() => localStorage.clear()}
+                variant={"outline"}
+              >
                 <User />
                 sign up
               </Button>

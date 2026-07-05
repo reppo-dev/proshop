@@ -31,9 +31,15 @@ func Register(c fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error":"Invalid server hash password"})
 	}
 
+
+
 	user := models.User{
 		Email: data.Email,
 		Password: string(hashpassword),
+	}
+
+	if err:= database.DB.WithContext(ctx).Where("email = ?",data.Email).First(&user).Error;err ==nil{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":"This user have account"})
 	}
 
 	if err := database.DB.WithContext(ctx).Create(&user).Error; err != nil{
@@ -71,8 +77,12 @@ func Login(c fiber.Ctx) error {
 
 	var user models.User
 
-	if err := database.DB.WithContext(ctx).Where("email = ?",data.Email).Find(&user).Error; err != nil{
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error":"Failed find user"})
+	if err := database.DB.WithContext(ctx).Where("email = ?",data.Email).First(&user).Error; err != nil{
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error":"Invalid email or password"})
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password),[]byte(data.Password)); err!= nil{
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid email or password",})
 	}
 
 	token,err := utils.GeneratJwt(user.ID)

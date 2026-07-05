@@ -8,6 +8,8 @@ import HomeScreens from "./screens/HomeScreens";
 import store from "./redux/store";
 import { Toaster } from "./components/ui/sonner";
 import CartScreen from "./screens/CartScreen";
+import LoginPage from "./screens/LoginScreen";
+import SignupPage from "./screens/SignupScreen";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,8 @@ const router = createBrowserRouter([
       { path: "/cart", element: <CartScreen /> },
     ],
   },
+  { path: "/login", element: <LoginPage /> },
+  { path: "/sign-up", element: <SignupPage /> },
 ]);
 
 createRoot(document.getElementById("root")!).render(

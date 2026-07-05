@@ -18,6 +18,7 @@ export interface CartState {
   taxPrice: string;
   totalPrice: string;
 }
+
 const cartFromStorage = localStorage.getItem("cart");
 
 const initialState: CartState = cartFromStorage
