@@ -195,14 +195,7 @@ export function SignupForm({
 
               <Field>
                 <Button type="submit" disabled={isLoading}>
-                  {isLoading ? (
-                    <div>
-                      <Loading />
-                      <p>registering...</p>
-                    </div>
-                  ) : (
-                    "Create Account"
-                  )}
+                  {isLoading ? <Loading /> : "Create Account"}
                 </Button>
                 <FieldDescription className="text-center">
                   Already have an account?{" "}

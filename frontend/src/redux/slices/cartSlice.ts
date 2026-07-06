@@ -11,12 +11,21 @@ export interface CartItem {
   quantity: number;
 }
 
+export interface ShippingAddress {
+  user_address: string;
+  city: string;
+  postal_code: string;
+  country: string;
+}
+
 export interface CartState {
   items: CartItem[];
   itemsPrice: number;
   shippingPrice: string;
   taxPrice: string;
   totalPrice: string;
+  shippingAddress: ShippingAddress;
+  paymentMethod: string;
 }
 
 const cartFromStorage = localStorage.getItem("cart");
@@ -29,6 +38,8 @@ const initialState: CartState = cartFromStorage
       shippingPrice: "0.00",
       taxPrice: "0.00",
       totalPrice: "0.00",
+      shippingAddress: {},
+      paymentMethod: "PayPal",
     };
 
 const cartSlice = createSlice({
@@ -73,9 +84,23 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
+    saveShipipingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+      return updateCart(state);
+    },
+    savePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
+      return updateCart(state);
+    },
   },
 });
 
-export const { addToCart, updateCartItem, removeFromCart } = cartSlice.actions;
+export const {
+  addToCart,
+  updateCartItem,
+  removeFromCart,
+  saveShipipingAddress,
+  savePaymentMethod,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

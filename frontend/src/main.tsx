@@ -10,6 +10,9 @@ import { Toaster } from "./components/ui/sonner";
 import CartScreen from "./screens/CartScreen";
 import LoginPage from "./screens/LoginScreen";
 import SignupPage from "./screens/SignupScreen";
+import ShippingScreen from "./screens/ShippingScreen";
+import PrivateRoute from "./components/PrivateRoute";
+import PaymentScreen from "./screens/PaymentScreen";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +22,16 @@ const router = createBrowserRouter([
       { path: "/", element: <HomeScreens /> },
       { path: "/product/:id", element: <ProductScreen /> },
       { path: "/cart", element: <CartScreen /> },
+      {
+        element: <PrivateRoute />,
+        children: [
+          {
+            path: "/shipping",
+            element: <ShippingScreen />,
+          },
+          { path: "/payment", element: <PaymentScreen /> },
+        ],
+      },
     ],
   },
   { path: "/login", element: <LoginPage /> },

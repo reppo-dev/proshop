@@ -105,10 +105,9 @@ const CartScreen = () => {
               </h2>
               <CardDescription>
                 $
-                {items.reduce(
-                  (acc, item) => acc + item.quantity * item.price,
-                  0,
-                )}
+                {items
+                  .reduce((acc, item) => acc + item.quantity * item.price, 0)
+                  .toFixed(2)}
               </CardDescription>
             </CardHeader>
             <hr />

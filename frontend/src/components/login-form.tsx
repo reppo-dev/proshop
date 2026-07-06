@@ -147,13 +147,7 @@ export function LoginForm({
               />
               <Field>
                 <Button type="submit" disabled={isLoading}>
-                  {isLoading ? (
-                    <div>
-                      <Loading /> <p>Login...</p>
-                    </div>
-                  ) : (
-                    "Login"
-                  )}
+                  {isLoading ? <Loading /> : "Login"}
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?
