@@ -1,4 +1,4 @@
-import { addDecimals, updateCart } from "@/utils/cartUtils";
+import { updateCart } from "@/utils/cartUtils";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export interface CartItem {

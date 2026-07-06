@@ -40,15 +40,15 @@ const PaymentScreen = () => {
           <CardTitle className="opacity-60">Select Method</CardTitle>
         </CardHeader>
         <CardContent>
-          <RadioGroup defaultValue="option-one">
-            <div className="flex items-center gap-3">
-              <RadioGroupItem value="option-one" id="option-one" />
-              <Label htmlFor="option-one" className="opacity-70">
-                Option One
-              </Label>
-            </div>
-          </RadioGroup>
-          <Button>Continue</Button>
+          <form className="flex flex-col gap-4" onSubmit={submaitHandler}>
+            <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="PayPal" id="paypal" />
+                <Label htmlFor="paypal">PayPal</Label>
+              </div>
+            </RadioGroup>
+            <Button type="submit">Continue</Button>
+          </form>
         </CardContent>
       </Card>
     </div>
