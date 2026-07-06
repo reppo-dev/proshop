@@ -18,4 +18,5 @@ func Router(app *fiber.App) {
 	app.Delete("/deletecartitem/:id",controller.DeleteCartitem)
 
 	app.Get("/useraddress",controller.UserAddress)
+	app.Post("/logout",controller.Logout)
 }

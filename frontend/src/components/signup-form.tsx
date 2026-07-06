@@ -19,9 +19,14 @@ import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
+import { useRegisterMutation } from "@/redux/slices/userApiSlice";
+import { setCredentils } from "@/redux/slices/authSlice";
+import { toast } from "sonner";
+import Loading from "./Loading";
 
 const signUpSchema = z
   .object({
@@ -51,6 +56,10 @@ export function SignupForm({
 
   const dispatch = useDispatch();
 
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+
+  const [register, { isLoading }] = useRegisterMutation();
+
   const form = useForm<FormSignUpShema>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -60,7 +69,23 @@ export function SignupForm({
     },
   });
 
-  const onSubmit = (data: FormSignUpShema) => {};
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [userInfo, redirect, navigate]);
+
+  const onSubmit = async (data: FormSignUpShema) => {
+    try {
+      const res = await register(data).unwrap();
+      dispatch(setCredentils({ ...res }));
+      navigate(redirect);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -169,7 +194,16 @@ export function SignupForm({
               </FieldDescription>
 
               <Field>
-                <Button type="submit">Create Account</Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? (
+                    <div>
+                      <Loading />
+                      <p>registering...</p>
+                    </div>
+                  ) : (
+                    "Create Account"
+                  )}
+                </Button>
                 <FieldDescription className="text-center">
                   Already have an account?{" "}
                   <Link

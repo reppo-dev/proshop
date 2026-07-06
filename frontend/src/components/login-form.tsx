@@ -70,7 +70,6 @@ export function LoginForm({
   const onSubmit = async (data: Login) => {
     try {
       const res = await login(data).unwrap();
-      console.log(res);
       dispatch(setCredentils({ ...res }));
       navigate(redirect);
     } catch (error) {
@@ -148,7 +147,13 @@ export function LoginForm({
               />
               <Field>
                 <Button type="submit" disabled={isLoading}>
-                  {isLoading ? <Loading /> : "Login"}
+                  {isLoading ? (
+                    <div>
+                      <Loading /> <p>Login...</p>
+                    </div>
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?
