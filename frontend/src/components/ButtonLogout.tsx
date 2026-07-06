@@ -24,7 +24,15 @@ const ButtonLogout = () => {
     }
   };
 
-  return <Button onClick={() => logoutHandler}>ButtonLogout</Button>;
+  return (
+    <Button
+      onClick={logoutHandler}
+      variant={"destructive"}
+      className="border-none bg-transparent"
+    >
+      logout
+    </Button>
+  );
 };
 
 export default ButtonLogout;

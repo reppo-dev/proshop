@@ -1,12 +1,26 @@
 import { BaggageClaim, CircleUser, User } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import ButtonLogout from "./ButtonLogout";
 
 const Header = () => {
   const { items } = useSelector((state: RootState) => state.cart);
+
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+
   return (
     <>
       <header>
@@ -28,18 +42,51 @@ const Header = () => {
                   )}
                 </Button>
               </Link>
-              <Button className="flex">
-                <CircleUser />
-                sign in
-              </Button>
-              <Button
-                className="flex"
-                onClick={() => localStorage.clear()}
-                variant={"outline"}
-              >
-                <User />
-                sign up
-              </Button>
+              {userInfo ? (
+                <div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <Avatar>
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuGroup>
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>Billing</DropdownMenuItem>
+                      </DropdownMenuGroup>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem>Team</DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <ButtonLogout />
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              ) : (
+                <div className="hidden md:flex gap-4">
+                  <Link to="/login">
+                    <Button className="flex">
+                      <CircleUser />
+                      sign in
+                    </Button>
+                  </Link>
+                  <Link to="/sign-up">
+                    <Button
+                      className="flex"
+                      onClick={() => localStorage.clear()}
+                      variant={"outline"}
+                    >
+                      <User />
+                      sign up
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </nav>
