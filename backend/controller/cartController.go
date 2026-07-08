@@ -85,7 +85,7 @@ func AddToCart(c fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":"Invalid request body"})
 	}
 
-	if req.ProductID == 0{
+	if req.ProductID == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":"Product ID is required"})
 	}
 	
@@ -155,7 +155,7 @@ func AddToCart(c fiber.Ctx) error {
 		id,err := strconv.Atoi(c.Params("id"))
 
 		if err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":"Invalid request id"})
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":"Invalid request id",})
 		}
 
 		if err := c.Bind().Body(&item);err != nil{

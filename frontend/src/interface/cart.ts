@@ -1,3 +1,5 @@
+import type { Product } from "./products";
+
 export interface Cart {
   ID: number;
   user_id: number;
@@ -10,4 +12,5 @@ export interface CartItem {
   product_id: number;
   quantity: number;
   price: number;
+  product: Product;
 }

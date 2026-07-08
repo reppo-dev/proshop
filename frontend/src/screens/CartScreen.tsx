@@ -14,9 +14,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { removeFromCart, updateCartItem } from "@/redux/slices/cartSlice";
+import {
+  useDeleteCartItemMutation,
+  useGetCardQuery,
+  useUpdateAddToCartMutation,
+} from "@/redux/slices/cartApiSlice";
+import {
+  removeFromCart,
+  setCart,
+  updateCartItem,
+} from "@/redux/slices/cartSlice";
 import type { RootState } from "@/redux/store";
 import { Trash } from "lucide-react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -26,13 +36,43 @@ const CartScreen = () => {
   const dispatch = useDispatch();
   const { items } = cart;
 
+  const { data } = useGetCardQuery();
+
+  const [updateItem, { isLoading }] = useUpdateAddToCartMutation();
+
+  const [deleteItem, { isLoading: loading }] = useDeleteCartItemMutation();
+
   const removeFromHandler = async (id: number) => {
-    dispatch(removeFromCart(id));
+    try {
+      await deleteItem(id).unwrap();
+
+      dispatch(removeFromCart(id));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const checkoutHandler = () => {
     navigate("/login?redirect=/shipping");
   };
+
+  useEffect(() => {
+    if (!data) return;
+
+    dispatch(
+      setCart(
+        data.items.map((item) => ({
+          ID: item.ID,
+          product_id: item.product_id,
+          quantity: item.quantity,
+          price: item.price,
+          name: item.product.name,
+          image: item.product.image,
+          count_inStock: item.product.count_inStock,
+        })),
+      ),
+    );
+  }, [data, dispatch, navigate]);
 
   return (
     <div className="flex flex-col w-full mt-4">
@@ -54,11 +94,18 @@ const CartScreen = () => {
                     className="w-32 h-32 p-2 ml-2 rounded-sm object-contain"
                   />
                   <div>{item.name}</div>
-                  <div>${item.price}</div>
+                  <div>${item.price.toFixed(2)}</div>
                   <div className="flex mr-4 gap-2">
                     <Select
+                      disabled={isLoading}
                       value={item.quantity.toString()}
-                      onValueChange={(value) => {
+                      onValueChange={async (value) => {
+                        const res = await updateItem({
+                          id: item.ID,
+                          quantity: Number(value),
+                        }).unwrap();
+
+                        console.log(res);
                         dispatch(
                           updateCartItem({
                             product_id: item.product_id,
@@ -86,7 +133,10 @@ const CartScreen = () => {
                       </SelectContent>
                     </Select>
 
-                    <Button onClick={() => removeFromHandler(item.ID)}>
+                    <Button
+                      disabled={loading}
+                      onClick={() => removeFromHandler(item.ID)}
+                    >
                       <Trash />
                     </Button>
                   </div>

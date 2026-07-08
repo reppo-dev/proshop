@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCreateAddToCartMutation } from "@/redux/slices/cartApiSlice";
 import { addToCart } from "@/redux/slices/cartSlice";
 import { useGetProductInfoQuery } from "@/redux/slices/productApiSlice";
 import { useState } from "react";
@@ -23,6 +24,7 @@ const ProductScreen = () => {
 
   const [qty, setQty] = useState<number>(1);
   const dispatch = useDispatch();
+  const [addtocart, { isLoading }] = useCreateAddToCartMutation();
 
   const navigate = useNavigate();
   if (!id) {
@@ -34,18 +36,17 @@ const ProductScreen = () => {
   }
   const productId = parseInt(id);
 
-  const {
-    isLoading,
-    isError,
-    error,
-    data: product,
-  } = useGetProductInfoQuery(productId);
+  const { isError, error, data: product } = useGetProductInfoQuery(productId);
 
   if (!product) {
     return <div>We Can't Find Product</div>;
   }
 
-  const addToCartHandler = () => {
+  const cartItem = { product_id: product.ID, quantity: qty };
+
+  const addToCartHandler = async () => {
+    const res = await addtocart(cartItem);
+    console.log(res);
     dispatch(
       addToCart({
         ID: product.ID,

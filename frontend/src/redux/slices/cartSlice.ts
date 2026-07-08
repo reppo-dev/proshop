@@ -1,6 +1,25 @@
 import { updateCart } from "@/utils/cartUtils";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+export interface CartResponse {
+  ID: number;
+  user_id: number;
+  items: ApiCartItem[];
+}
+
+export interface ApiCartItem {
+  ID: number;
+  product_id: number;
+  quantity: number;
+  price: number;
+  product: {
+    ID: number;
+    name: string;
+    image: string;
+    count_inStock: number;
+  };
+}
+
 export interface CartItem {
   ID: number;
   product_id: number;
@@ -92,6 +111,14 @@ const cartSlice = createSlice({
       state.paymentMethod = action.payload;
       return updateCart(state);
     },
+    clearCartItem: (state) => {
+      state.items = [];
+      return updateCart(state);
+    },
+    setCart: (state, action: PayloadAction<CartItem[]>) => {
+      state.items = action.payload;
+      updateCart(state);
+    },
   },
 });
 
@@ -101,6 +128,8 @@ export const {
   removeFromCart,
   saveShipipingAddress,
   savePaymentMethod,
+  clearCartItem,
+  setCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
