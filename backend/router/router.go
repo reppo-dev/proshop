@@ -17,7 +17,11 @@ func Router(app *fiber.App) {
 	app.Put("/updatecartitem/:id",controller.UpdateCartItem)
 	app.Delete("/deletecartitem/:id",controller.DeleteCartitem)
 
+	app.Put("/createaddress",controller.CreateAddress)
+
 	app.Get("/useraddress",controller.UserAddress)
 	app.Post("/logout",controller.Logout)
 	app.Post("/createorder",controller.CreateOrder)
+	app.Get("/allorder",controller.AllOrders)
+	app.Get("/userorder",controller.AllUserOrder)
 }

@@ -1,3 +1,4 @@
+import type { Address } from "./address";
 import type { Product } from "./products";
 
 export interface Order {
@@ -5,6 +6,8 @@ export interface Order {
   UserID: number;
   Status: string;
   TotalAmount: number;
+  is_paid: boolean;
+  order_address: Address;
   Items: OrderItem[];
 }
 

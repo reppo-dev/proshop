@@ -14,7 +14,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
+
+    userOrder: builder.query<Order, void>({
+      query: () => ({
+        url: "/userorder",
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
-export const { useCreateOrderMutation } = orderApiSlice;
+export const { useCreateOrderMutation, useUserOrderQuery } = orderApiSlice;

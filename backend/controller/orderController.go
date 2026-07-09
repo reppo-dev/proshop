@@ -88,10 +88,17 @@ func CreateOrder(c fiber.Ctx) error {
 			totalAmount += item.Price * float64(item.Quantity)
 		}
 
+		var address models.Address
+
+		if err:= tx.Where("user_id = ?",userId).First(&address).Error;err!=nil{
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error":"Failed found address"})
+		}
+
 		order = models.Order{
 			UserID: userId,
 			Status: models.StatusPending,
 			TotalAmount: totalAmount,
+			OrderAddress: models.OrderAddress(address),
 		}
 
 		if err := tx.Create(&order).Error;err !=nil {
