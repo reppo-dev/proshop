@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/gofiber/fiber/v3"
@@ -83,21 +84,54 @@ func CreateOrder(c fiber.Ctx) error {
 			return errors.New("Cart is empty")
 		}
 
+        for _, cartItem := range cart.Items {
+			
+            product := cartItem.Product
+
+            if product.CountInStock < float32(cartItem.Quantity) {
+                return fmt.Errorf("insufficient stock for product: %s (available: %d, requested: %d)",
+                    product.Name, int(product.CountInStock), cartItem.Quantity)
+            }
+
+            product.CountInStock -= float32(cartItem.Quantity)
+
+            if err := tx.Save(&product).Error; err != nil {
+                return fmt.Errorf("failed to update stock for product: %s", product.Name)
+            }
+        }
+
 		var totalAmount float64
 		for _, item := range cart.Items{
 			totalAmount += item.Price * float64(item.Quantity)
 		}
+		var shipping float64
+		if totalAmount> 100 {
+			shipping=0
+		} else {
+			shipping = 15
+		}
+
+		var tax float64
+
+		tax = 0.15 * totalAmount
+
+		var totalPrice float64
+
+		totalPrice = totalAmount+shipping+tax
 
 		var address models.Address
 
 		if err:= tx.Where("user_id = ?",userId).First(&address).Error;err!=nil{
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error":"Failed found address"})
+			return errors.New("Failed found address")
 		}
 
 		order = models.Order{
 			UserID: userId,
 			Status: models.StatusPending,
 			TotalAmount: totalAmount,
+			Shipping: shipping,
+			Tax: tax,
+			TotalPrice:totalPrice ,
 			OrderAddress: models.OrderAddress(address),
 		}
 

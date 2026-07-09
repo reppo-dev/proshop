@@ -9,6 +9,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useCreateAddressMutation } from "@/redux/slices/addressApiSlice";
 import { saveShipipingAddress } from "@/redux/slices/cartSlice";
 import type { RootState } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +17,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import z from "zod";
 
 const addressSchema = z.object({
@@ -55,11 +57,20 @@ const ShippingScreen = () => {
 
   const navigate = useNavigate();
 
+  const [createaddres, { isLoading }] = useCreateAddressMutation();
+
   const onSubmit = async (data: FormAddressSchema) => {
-    setLoading(true);
-    dispatch(saveShipipingAddress(data));
-    navigate("/payment");
-    setLoading(false);
+    try {
+      setLoading(true);
+      await createaddres(data).unwrap();
+      dispatch(saveShipipingAddress(data));
+      navigate("/payment");
+      setLoading(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   };
 
   return (
@@ -145,7 +156,7 @@ const ShippingScreen = () => {
                 )}
               />
               <Field>
-                <Button type="submit" disabled={loading}>
+                <Button type="submit" disabled={loading || isLoading}>
                   {loading ? <Loading /> : "Save Address"}
                 </Button>
               </Field>

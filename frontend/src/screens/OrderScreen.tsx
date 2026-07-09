@@ -1,4 +1,8 @@
+import Loading from "@/components/Loading";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useUserOrderQuery } from "@/redux/slices/orderApiSlice";
+import { Link } from "react-router-dom";
 
 const OrderScreen = () => {
   const { data: order, refetch, isLoading, error } = useUserOrderQuery();
@@ -11,7 +15,11 @@ const OrderScreen = () => {
             <h1 className="text-2xl font-medium text-gray-600">Shipping</h1>
             <div className="md:flex gap-2 my-2">
               <strong className="text-gray-600">Address:</strong>
-              <div></div>
+              <p className="text-gray-500">
+                {order?.order_address.user_address},{order?.order_address.city},
+                {order?.order_address.postal_code},
+                {order?.order_address.country}
+              </p>
             </div>
           </div>
           <hr />
@@ -21,30 +29,32 @@ const OrderScreen = () => {
             </h1>
             <div className="flex gap-2 my-2">
               <strong className="text-gray-600">Method:</strong>
-              <p className="text-gray-500">{cart.paymentMethod}</p>
+              <p className="text-gray-500">{order?.Status}</p>
             </div>
           </div>
           <hr />
           <div>
             <h1 className="text-2xl font-medium text-gray-600">Order Items</h1>
-            {cart.items.length === 0 ? (
+            {order?.Items.length === 0 ? (
               <p className="text-gray-500">Your cart is empty</p>
             ) : (
               <div>
-                {cart.items.map((item, index) => (
+                {order?.Items.map((item, index) => (
                   <div key={index} className="border-b ml-4 mt-2">
                     <div className="flex gap-8 justify-between items-center py-2">
                       <div className="flex gap-4 items-center justify-center">
                         <img
-                          src={item.image}
-                          alt={item.name}
+                          src={item.Product.image}
+                          alt={item.Product.name}
                           className="w-16 h-16 rounded-sm object-contain"
                         />
-                        <Link to={`/products/${item.ID}`}>{item.name}</Link>
+                        <Link to={`/products/${item.ID}`}>
+                          {item.Product.name}
+                        </Link>
                       </div>
                       <div>
-                        {item.quantity.toFixed(2)} x ${item.price.toFixed(2)} =
-                        ${(item.quantity * item.price).toFixed(2)}
+                        {item.Quantity.toFixed(2)} x ${item.Price.toFixed(2)} =
+                        ${(item.Quantity * item.Price).toFixed(2)}
                       </div>
                     </div>
                   </div>
@@ -61,9 +71,9 @@ const OrderScreen = () => {
           <CardContent className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <h4>Items:</h4>
-              <p>${cart.itemsPrice.toFixed(2)}</p>
+              <p>${order?.TotalAmount.toFixed(2)}</p>
             </div>
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <h4>Shipping:</h4>
               <p>${cart.shippingPrice}</p>
             </div>
@@ -74,14 +84,14 @@ const OrderScreen = () => {
             <div className="flex items-center justify-between">
               <h4>Total:</h4>
               <p>${cart.totalPrice}</p>
-            </div>
-            <Button
+            </div> */}
+            {/* <Button
               type="button"
-              disabled={cart.items.length === 0 || isLoading}
+              disabled={order?.Items.length === 0 || isLoading}
               onClick={placeOrderHandler}
             >
-              {isLoading ? <Loading /> : "Place Order"}
-            </Button>
+              {isLoading ? <Loading/> : "Place Order"}
+            </Button> */}
           </CardContent>
         </Card>
       </div>

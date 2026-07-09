@@ -3,10 +3,14 @@ import { apiSlice } from "./apiSlice";
 
 export const addressApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createAddress: builder.mutation<ModleCreateAddress, void>({
+    createAddress: builder.mutation<ModleCreateAddress, ModleCreateAddress>({
       query: (data) => ({
-        url: "/",
+        url: "/createaddress",
+        body: data,
+        method: "PUT",
       }),
     }),
   }),
 });
+
+export const { useCreateAddressMutation } = addressApiSlice;

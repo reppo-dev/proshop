@@ -25,6 +25,9 @@ type Order struct {
 	Items        []OrderItem  `json:"items,omitempty"`
 	IsPaid		 bool 		  `json:"is_paid" gorm:"default:false"`
 	OrderAddress OrderAddress `json:"order_address"`
+	Shipping     float64      `json:"shipping"`
+	Tax          float64      `json:"tax"`
+	TotalPrice   float64      `json:"total_price"`
 	ShippedAt    *time.Time   `json:"shipped_at,omitempty"`
 	DeliveredAt  *time.Time   `json:"delivered_at,omitempty"`
 }
