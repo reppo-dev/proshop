@@ -3,18 +3,21 @@ import type { Product } from "./products";
 
 export interface Order {
   ID: number;
-  UserID: number;
-  Status: string;
-  TotalAmount: number;
+  user_id: number;
+  status: string;
+  total_amount: number;
+  shipping: number;
+  tax: number;
+  total_price: number;
   is_paid: boolean;
   order_address: Address;
-  Items: OrderItem[];
+  items: OrderItem[];
 }
 
 export interface OrderItem {
   ID: number;
-  ProductID: number;
-  Quantity: number;
-  Price: number;
-  Product: Product;
+  product_id: number;
+  quantity: number;
+  price: number;
+  product: Product;
 }

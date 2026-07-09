@@ -23,5 +23,6 @@ func Router(app *fiber.App) {
 	app.Post("/logout",controller.Logout)
 	app.Post("/createorder",controller.CreateOrder)
 	app.Get("/allorder",controller.AllOrders)
-	app.Get("/userorder",controller.AllUserOrder)
+	app.Get("/alluserorder",controller.AllUserOrder)
+	app.Get("/userorder/:id",controller.UserOrder)
 }

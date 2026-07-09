@@ -44,10 +44,12 @@ type OrderItem struct {
 
 
 type OrderAddress struct {
-	gorm.Model
-	UserID uint `json:"user_id"`
-	UserAddress string `json:"user_address"`
-	City string `json:"city"`
-	PostalCode string `json:"postal_code"`
-	Country string `json:"country"`
+    gorm.Model
+
+    OrderID uint `json:"order_id"`
+
+    UserAddress string `json:"user_address"`
+    City         string `json:"city"`
+    PostalCode   string `json:"postal_code"`
+    Country      string `json:"country"`
 }

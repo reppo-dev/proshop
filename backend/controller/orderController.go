@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v3"
@@ -57,6 +58,47 @@ func AllUserOrder(c fiber.Ctx) error {
 	})
 }
 
+func UserOrder(c fiber.Ctx) error {
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    cookie := c.Cookies("jwt")
+    if cookie == "" {
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Missing token"})
+    }
+
+    id, err := strconv.Atoi(c.Params("id"))
+    if err != nil {
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+            "error": "Invalid order ID format",
+        })
+    }
+
+    userId, err := utils.ParseJwt(cookie)
+    if err != nil {
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid or expired token"})
+    }
+
+    var order models.Order
+    result := database.DB.WithContext(ctx).
+        Where("user_id = ?", userId).
+        Preload("Items.Product").
+		Preload("OrderAddress").
+        First(&order, id)
+
+    if result.Error != nil {
+        if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+            return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+                "error": "Order not found for this user",
+            })
+        }
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "error": "Failed to fetch order",
+        })
+    }
+
+    return c.JSON(order)
+}
 
 func CreateOrder(c fiber.Ctx) error {
 	ctx,cancel := context.WithTimeout(context.Background(),5 * time.Second)
@@ -132,7 +174,12 @@ func CreateOrder(c fiber.Ctx) error {
 			Shipping: shipping,
 			Tax: tax,
 			TotalPrice:totalPrice ,
-			OrderAddress: models.OrderAddress(address),
+			OrderAddress: models.OrderAddress{
+				UserAddress: address.UserAddress,
+				City: address.City,
+				PostalCode: address.PostalCode,
+				Country: address.Country,
+			},
 		}
 
 		if err := tx.Create(&order).Error;err !=nil {
