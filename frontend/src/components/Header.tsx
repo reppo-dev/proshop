@@ -54,7 +54,9 @@ const Header = () => {
                     <DropdownMenuContent>
                       <DropdownMenuGroup>
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link to="/">Home</Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem>Billing</DropdownMenuItem>
                       </DropdownMenuGroup>
                       <DropdownMenuSeparator />

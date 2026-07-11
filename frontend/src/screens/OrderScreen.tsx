@@ -52,9 +52,10 @@ const OrderScreen = () => {
               Payment Method
             </h1>
             <div className="flex gap-2 my-2">
-              <strong className="text-gray-600">Method:</strong>
+              <strong className="text-gray-600">Status:</strong>
               <p className="text-gray-500">{order.status || "Not specified"}</p>
             </div>
+            <div>{!order.is_paid ? <p>Not Paid</p> : <p>Paid</p>}</div>
           </div>
           <hr />
 
