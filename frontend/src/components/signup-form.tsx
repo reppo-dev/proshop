@@ -202,7 +202,7 @@ export function SignupForm({
                   <Link
                     to={redirect ? `/login?redirect=${redirect}` : "/login"}
                   >
-                    Sign up
+                    login
                   </Link>
                 </FieldDescription>
               </Field>
