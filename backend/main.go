@@ -23,6 +23,7 @@ func main() {
     	AllowCredentials: true,
 	}))
 
+	
 	router.Router(app)
 
 	port := os.Getenv("PORT")
