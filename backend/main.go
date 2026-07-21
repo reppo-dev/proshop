@@ -1,6 +1,9 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/reppo/backend-ecommerce/database"
@@ -22,6 +25,11 @@ func main() {
 
 	router.Router(app)
 
-	app.Listen(":8000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000" // برای اجرا روی سیستم خودت
+	}
+
+	log.Fatal(app.Listen(":" + port))
 
 }
