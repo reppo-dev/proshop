@@ -23,7 +23,7 @@ func Connect() {
 	db, err := gorm.Open(postgres.Open(dns),&gorm.Config{})
 
 	if err != nil {
-		log.Fatalln("Somthing wrong , you can't connected in database , error:",err)
+		log.Println("Somthing wrong , you can't connected in database , error:",err)
 	}
 
 	DB = db
