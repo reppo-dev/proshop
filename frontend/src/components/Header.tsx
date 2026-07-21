@@ -15,6 +15,7 @@ import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ButtonLogout from "./ButtonLogout";
+import proshop from "/public/proshop.png";
 
 const Header = () => {
   const { items } = useSelector((state: RootState) => state.cart);
@@ -27,7 +28,7 @@ const Header = () => {
         <nav className=" bg-gray-300 rounded-b-lg">
           <div className="flex items-center h-16 justify-between mx-4 ">
             <div className="flex items-center justify-center m-0 p-0 gap-0">
-              <img src="../public/proshop.png" className="w-12 h-12" alt="" />
+              <img src={proshop} className="w-12 h-12" alt="" />
               <p className="font-bold">ProShop</p>
             </div>
             <div className="hidden md:flex gap-4">
