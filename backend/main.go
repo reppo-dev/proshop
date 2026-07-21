@@ -23,14 +23,11 @@ func main() {
     	AllowCredentials: true,
 	}))
 
-	
+
 	router.Router(app)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8000"
-	}
 
-	log.Fatal(app.Listen("0.0.0.0:" + port))
+
+	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 
 }
