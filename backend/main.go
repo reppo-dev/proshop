@@ -17,7 +17,7 @@ func main() {
 	app := fiber.New()
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost:5173"},
+		AllowOrigins: []string{"https://proshop-pied.vercel.app", "http://localhost:5173"},
     	AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
     	AllowHeaders: []string{"Content-Type", "Authorization"},
     	AllowCredentials: true,
