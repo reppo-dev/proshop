@@ -23,15 +23,12 @@ func main() {
     	AllowCredentials: true,
 	}))
 
-	
 	router.Router(app)
 
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8000"
 	}
-
-	go database.Connect()
 
 	log.Fatal(app.Listen("0.0.0.0:" + port))
 
