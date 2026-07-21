@@ -11,7 +11,7 @@ import (
 )
 
 func AllProduct(c fiber.Ctx) error {
-	ctx,cancel := context.WithTimeout(context.Background(),time.Second * 5)
+	ctx,cancel := context.WithTimeout(context.Background(),time.Second * 30)
 	defer cancel()
 
 	var products []models.Product
@@ -26,7 +26,7 @@ func AllProduct(c fiber.Ctx) error {
 
 func ProductIngo(c fiber.Ctx) error {
 
-	ctx,cancel := context.WithTimeout(context.Background(),5 *time.Second)
+	ctx,cancel := context.WithTimeout(context.Background(),30 *time.Second)
 	defer cancel()
 
 	id,err := strconv.Atoi(c.Params("id"))

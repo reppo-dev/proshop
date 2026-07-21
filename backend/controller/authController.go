@@ -12,7 +12,7 @@ import (
 )
 
 func Register(c fiber.Ctx) error {
-	ctx , cancel := context.WithTimeout(context.Background(),time.Second *5)
+	ctx , cancel := context.WithTimeout(context.Background(),time.Second *30)
 	defer cancel()
 
 	var data models.ModelRegister
@@ -66,7 +66,7 @@ func Register(c fiber.Ctx) error {
 }
 
 func Login(c fiber.Ctx) error {
-	ctx , cancel := context.WithTimeout(context.Background(),time.Second *5)
+	ctx , cancel := context.WithTimeout(context.Background(),time.Second *30)
 	defer cancel()
 
 	var data models.Login
