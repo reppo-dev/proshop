@@ -27,7 +27,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8000" // برای اجرا روی سیستم خودت
+		port = "8000"
 	}
 
 	log.Fatal(app.Listen("0.0.0.0:" + port))
