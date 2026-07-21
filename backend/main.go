@@ -30,6 +30,6 @@ func main() {
 		port = "8000" // برای اجرا روی سیستم خودت
 	}
 
-	log.Fatal(app.Listen(":" + port))
+	log.Fatal(app.Listen("0.0.0.0:" + port))
 
 }
