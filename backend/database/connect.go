@@ -14,10 +14,8 @@ var DB *gorm.DB
 
 func Connect() {
 
-	err := godotenv.Load()
-
-	if err != nil {
-		log.Fatalln("We can't load env file ,error:",err)
+	if err := godotenv.Load(); err != nil {
+		log.Println("no .env file found, reading from environment directly")
 	}
 
 	dns := os.Getenv("dns")
